@@ -139,6 +139,7 @@
 
 - (void)addItem {
     [self.todoItemList addObject:[[TodoItem alloc]initWithString:@"Todo" tag:[self getNewTag]]];
+    [TodoItem storeTodoItems:self.todoItemList];
     [self.tableView reloadData];
 }
 
@@ -159,6 +160,7 @@
         item.todoItemText = textField.text;
         [TodoItem storeTodoItems:self.todoItemList];
     }
+    [self.view endEditing:YES];
     return YES;
 }
 
