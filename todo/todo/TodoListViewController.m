@@ -9,6 +9,7 @@
 #import "TodoListViewController.h"
 #import "TodoItemCell.h"
 #import "TodoItem.h"
+//#import “UIColor+PXExtenions.h”
 
 @interface TodoListViewController ()
 
@@ -51,6 +52,8 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addItem)];
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    self.tableView.backgroundColor = [UIColor purpleColor];
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,6 +82,18 @@
         cell = [[TodoItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TodoItemCell"];
     }
     cell.todoItemTextField.delegate = self;
+    
+    if (indexPath.row % 2 == 0) {
+        CGFloat red   = ((0x8467D7 & 0xFF0000) >> 16) / 255.0f;
+        CGFloat green = ((0x8467D7 & 0x00FF00) >>  8) / 255.0f;
+        CGFloat blue  =  (0x8467D7 & 0x0000FF) / 255.0f;
+        cell.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+    } else {
+        CGFloat red   = ((0x9E7BFF & 0xFF0000) >> 16) / 255.0f;
+        CGFloat green = ((0x9E7BFF & 0x00FF00) >>  8) / 255.0f;
+        CGFloat blue  =  (0x9E7BFF & 0x0000FF) / 255.0f;
+        cell.backgroundColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+    }
     
     TodoItem *item = self.todoItemList[indexPath.row];
     cell.todoItemTextField.text = item.todoItemText;

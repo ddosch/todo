@@ -8,19 +8,20 @@
         <scene sceneID="lnT-Hb-Hb4">
             <objects>
                 <tableViewController id="2Kl-Oy-u4o" customClass="TodoListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="53" sectionHeaderHeight="22" sectionFooterHeight="22" id="f11-Gx-She">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelectionDuringEditing="YES" rowHeight="53" sectionHeaderHeight="22" sectionFooterHeight="22" id="f11-Gx-She">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="sectionIndexTrackingBackgroundColor" red="0.55979507745954393" green="0.095258312807864343" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TodoItemCell" rowHeight="53" id="hHZ-Wk-jqM" customClass="TodoItemCell">
                                 <rect key="frame" x="0.0" y="86" width="320" height="53"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hHZ-Wk-jqM" id="Oiv-or-UII">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="52"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CrL-T4-LMu">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CrL-T4-LMu">
                                             <rect key="frame" x="20" y="11" width="280" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -30,6 +31,7 @@
                                     <constraints>
                                         <constraint firstItem="CrL-T4-LMu" firstAttribute="leading" secondItem="Oiv-or-UII" secondAttribute="leading" constant="20" id="HLR-4F-f2O"/>
                                         <constraint firstAttribute="trailing" secondItem="CrL-T4-LMu" secondAttribute="trailing" constant="20" id="LWs-nJ-eMd"/>
+                                        <constraint firstItem="CrL-T4-LMu" firstAttribute="top" secondItem="Oiv-or-UII" secondAttribute="top" constant="11" id="Nur-Ju-UJq"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <gestureRecognizers/>
