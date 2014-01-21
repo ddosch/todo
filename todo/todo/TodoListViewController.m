@@ -11,6 +11,10 @@
 #import "TodoItem.h"
 //#import “UIColor+PXExtenions.h”
 
+#define FONT_SIZE 14.0f
+#define CELL_CONTENT_WIDTH 320.0f
+#define CELL_CONTENT_MARGIN 10.0f
+
 @interface TodoListViewController ()
 
 @property (strong, nonatomic) NSMutableArray *todoItemList;
@@ -81,7 +85,7 @@
     if (cell == nil) {
         cell = [[TodoItemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TodoItemCell"];
     }
-    cell.todoItemTextField.delegate = self;
+    cell.todoCellTextView.delegate = self;
     
     if (indexPath.row % 2 == 0) {
         CGFloat red   = ((0x8467D7 & 0xFF0000) >> 16) / 255.0f;
@@ -96,8 +100,11 @@
     }
     
     TodoItem *item = self.todoItemList[indexPath.row];
-    cell.todoItemTextField.text = item.todoItemText;
-    cell.todoItemTextField.tag = item.todoItemTag;
+    cell.todoCellTextView.text = item.todoItemText;
+    cell.todoCellTextView.tag = item.todoItemTag;
+    
+    [self textViewDidChange:cell.todoCellTextView];
+    
     return cell;
 }
 
@@ -167,16 +174,38 @@
     return newTag;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    NSLog(@"textFieldShouldReturn called");
-    TodoItem *item = [self itemWithTag:textField.tag];
-    if (item != nil) {
-        NSLog(@"item is not nil");
-        item.todoItemText = textField.text;
-        [TodoItem storeTodoItems:self.todoItemList];
+//- (BOOL)textViewShouldReturn:(UITextView *)textView {
+//    NSLog(@"textFieldShouldReturn called");
+//    TodoItem *item = [self itemWithTag:textView.tag];
+//    if (item != nil) {
+//        NSLog(@"item is not nil");
+//        item.todoItemText = textView.text;
+//        [TodoItem storeTodoItems:self.todoItemList];
+//    }
+//    [self.view endEditing:YES];
+//    return YES;
+//}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    // Any new character added is passed in as the "text" parameter
+    if ([text isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textView resignFirstResponder];
+        
+        // Return FALSE so that the final '\n' character doesn't get added
+        
+        TodoItem *item = [self itemWithTag:textView.tag];
+        if (item != nil) {
+            NSLog(@"item is not nil");
+            item.todoItemText = textView.text;
+            [TodoItem storeTodoItems:self.todoItemList];
+        }
+        
+        return FALSE;
     }
-    [self.view endEditing:YES];
-    return YES;
+    // For any other character return TRUE so that the text gets added to the view
+    return TRUE;
 }
 
 - (int)indexOfItemWithTag:(int)tag {
@@ -198,6 +227,31 @@
         }
     }
     return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    TodoItem *item = self.todoItemList[indexPath.row];
+    CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+    
+    NSDictionary *stringAttributes = [NSDictionary dictionaryWithObject:[UIFont systemFontOfSize:14.0f] forKey: NSFontAttributeName];
+    
+    CGSize size = [item.todoItemText boundingRectWithSize:constraint options: NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:stringAttributes context:nil].size;
+    
+    
+    NSLog(@"height = %f", size.height);
+    CGFloat height = size.height;
+    return height + (CELL_CONTENT_MARGIN * 2);
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    NSLog(@"Text view did change");
+    CGFloat fixedWidth = textView.frame.size.width;
+    CGSize newSize = [textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    CGRect newFrame = textView.frame;
+    newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+    textView.frame = newFrame;
 }
 
 @end

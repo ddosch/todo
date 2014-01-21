@@ -10,6 +10,6 @@
 
 @interface TodoItemCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UITextField *todoItemTextField;
+@property (weak, nonatomic) IBOutlet UITextView *todoCellTextView;
 
 @end
